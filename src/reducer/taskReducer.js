@@ -1,8 +1,8 @@
 export const taskReducer = (state, {type, payload}) => {
     switch (type) {
         case 'CHANGE_LINE':
-            const [remove] = state[payload.source.droppableId].splice(payload.source.index, 1);
-            state[payload.source.droppableId].splice(payload.destination.index, 0, remove);
+            const [remove1] = state[payload.source.droppableId].splice(payload.source.index, 1);
+            state[payload.source.droppableId].splice(payload.destination.index, 0, remove1);
             return {...state}
         case 'CHANGE_COLUMN':
             let [remove2] = state[payload.source.droppableId].splice(payload.source.index, 1);
@@ -13,6 +13,8 @@ export const taskReducer = (state, {type, payload}) => {
         case 'DELETE':
             const newColumn = state[payload.column].filter((ele) => ele.index !== payload.index);
             return {...state, [payload.column]: newColumn}
+        case 'ADD_BOARD':
+            return {...state, [payload]: []}
         default:
             throw new Error();
     }
