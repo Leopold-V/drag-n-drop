@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
-import data from './data';
-import { changeOfLine, changeOfColumn } from './helpers/moveTasks';
+import { taskReducer } from './reducer/taskReducer';
+
 import Card from './components/Card';
 
 function App() {
-  const [state, setState] = useState(data);
+
+  const [state, dispatch] = useReducer(taskReducer, {'Todo': [], 'In progress': [], 'Completed': []});
 
   const onDragEnd = (result) => {
     const { draggableId, source, destination } = result;
@@ -17,13 +18,12 @@ function App() {
 
     if (destination.droppableId !== 'trash') {
       if (source.droppableId === destination.droppableId) {
-        setState(changeOfLine(state, source, destination));
+        dispatch({type: 'CHANGE_LINE', payload: {source, destination}})
       } else {
-        setState(changeOfColumn(state, source, destination));
+        dispatch({type: 'CHANGE_COLUMN', payload: {source, destination}})
       }
     } else {
-      const newColumn = state[source.droppableId].filter((ele) => ele.index !== draggableId);
-      setState({...state, [source.droppableId]: newColumn});
+      dispatch({type: 'DELETE', payload: {index: draggableId, column: source.droppableId}})
     }
   };
 
@@ -32,9 +32,9 @@ function App() {
       <Container>
       <Title>Drag and drop demo</Title>
         <ContainerCard>
-            {Object.keys(state).map((ele) => (
-              <div key={ele} >
-                <Card title={ele} tasks={state[ele]} />
+            {Object.keys(state).map((ele, i) => (
+              <div key={i} >
+                <Card title={ele} tasks={state[ele]} dispatch={dispatch} />
               </div>
             ))}
         </ContainerCard>

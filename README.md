@@ -1,7 +1,7 @@
 # TODO
 
-* [ ] Search bar
-* [ ] Delete button
-* [ ] reducer
-* [ ] data with id (generate with nanoid ?)
-* [ ] usereducer + usedispatch (3 actions)
+* [x] Search bar
+* [x] Delete button
+* [x] reducer
+* [x] data with id (generate with nanoid ?)
+* [x] usereducer (3 actions)

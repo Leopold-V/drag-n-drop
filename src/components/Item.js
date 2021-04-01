@@ -4,8 +4,6 @@ import { Draggable } from 'react-beautiful-dnd';
 
 export const Item = ({ task, index}) => {
 
-    
-
   return (
     <Draggable draggableId={task.index} index={index}>
       {(provided, snapshot) => (
@@ -32,4 +30,6 @@ const Itemstyled = styled.li`
   color: white;
   border-radius: 3px;
   box-shadow: 0 0 .3rem rgba(0, 0, 0, 0.3);
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;

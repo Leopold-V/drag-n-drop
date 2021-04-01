@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import { nanoid } from 'nanoid';
 import { Droppable } from 'react-beautiful-dnd';
 
 import Item from './Item';
 
-const Card = ({ title, tasks }) => {
+const Card = ({ title, tasks, dispatch }) => {
+
+  const ref_task = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newTask = {index: nanoid(5), name: ref_task.current.value};
+    dispatch({type: 'ADD', payload: {column: title, task: newTask}});
+    ref_task.current.value = '';
+  }
+
   return (
     <CardStyled>
       <CardHeader>{title}</CardHeader>
@@ -18,11 +29,51 @@ const Card = ({ title, tasks }) => {
           </CardBody>
         )}
       </Droppable>
+      <InputGroup onSubmit={handleSubmit}>
+        <Button>
+          <i className='fa fa-plus'></i>
+        </Button>
+        <Input ref={ref_task} type="text" placeholder="Add a task" />
+      </InputGroup>
     </CardStyled>
   );
 };
 
 export default Card;
+
+const Button = styled.button`
+  height: 100%;
+  padding: 0 .8rem;
+  background-color: #2ec991;
+  color: white;
+  border: none;
+  outline: none;
+  transition: all .3s;
+  &:hover {
+    opacity: 0.8;
+  }
+`
+
+const InputGroup = styled.form`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background-color: whitesmoke;
+  overflow: hidden;
+  border-radius: 3px;
+  box-shadow: 0 0 .3rem rgba(0, 0, 0, 0.3);
+`
+
+const Input = styled.input`
+  width: 100%;
+  padding: .5rem .5rem;
+  text-align: center;
+  background-color: whitesmoke;
+  font-size: .9rem;
+  border: none;
+  outline: none;
+`
 
 const CardStyled = styled.div`
   width: 15rem;
