@@ -4,8 +4,8 @@
 
 ### TODO
 
-* [x] Search bar
-* [x] Delete button
-* [x] reducer
-* [x] data with id (generate with nanoid ?)
-* [x] usereducer (3 actions)
+* [x] Add item bar
+* [x] Delete drop zone
+* [x] reducer function
+* [x] add to data real id (generate with nanoid ?)
+* [x] useReducer (4 actions)
