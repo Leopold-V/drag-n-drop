@@ -4,7 +4,7 @@ import { Droppable } from 'react-beautiful-dnd';
 
 import Item from './Item';
 
-const Card = ({ title, tasks }) => {
+const Card = ({ title, tasks, handleDrag }) => {
   return (
     <CardStyled>
       <CardHeader>{title}</CardHeader>
@@ -12,7 +12,7 @@ const Card = ({ title, tasks }) => {
         {(provided) => (
           <CardBody ref={provided.innerRef} {...provided.droppableProps}>
             {tasks.map((ele, i) => (
-              <Item key={ele.index} index={i} task={ele} />
+              <Item key={ele.index} index={i} task={ele} handleDrag={handleDrag} />
             ))}
             {provided.placeholder}
           </CardBody>

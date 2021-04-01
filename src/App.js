@@ -22,6 +22,10 @@ const changeOfColumn = (state, source, destination) => {
 function App() {
   const [state, setState] = useState(data);
 
+  const handleDrag = (isDragging) => {
+    console.log(isDragging);
+  } 
+
   const onDragEnd = (result) => {
     const { source, destination } = result;
 
@@ -42,7 +46,7 @@ function App() {
         <DragDropContext onDragEnd={onDragEnd}>
           {Object.keys(state).map((ele) => (
             <div>
-              <Card key={ele} title={ele} tasks={data[ele]} />
+              <Card key={ele} title={ele} tasks={data[ele]} handleDrag={handleDrag} />
             </div>
           ))}
         </DragDropContext>
