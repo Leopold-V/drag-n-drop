@@ -3,21 +3,8 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 import data from './data';
-import Card from './Card';
-
-const changeOfLine = (state, source, destination) => {
-  const result = { ...state };
-  const [remove] = result[source.droppableId].splice(source.index, 1);
-  result[source.droppableId].splice(destination.index, 0, remove);
-  return result;
-};
-
-const changeOfColumn = (state, source, destination) => {
-  const result = { ...state };
-  const [remove] = result[source.droppableId].splice(source.index, 1);
-  result[destination.droppableId].splice(destination.index, 0, remove);
-  return result;
-};
+import { changeOfLine, changeOfColumn } from './helpers/moveTasks';
+import Card from './components/Card';
 
 function App() {
   const [state, setState] = useState(data);
