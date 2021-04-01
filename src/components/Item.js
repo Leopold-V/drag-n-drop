@@ -8,10 +8,10 @@ export const Item = ({ task, index}) => {
     <Draggable draggableId={task.index} index={index}>
       {(provided, snapshot) => (
         <Itemstyled 
-        ref={provided.innerRef} 
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        isDragging={snapshot.isDragging}
+          ref={provided.innerRef} 
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          isDragging={snapshot.isDragging}
         >
           {task.name}
         </Itemstyled>

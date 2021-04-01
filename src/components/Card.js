@@ -1,41 +1,49 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
-import { Droppable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import Item from './Item';
 
-const Card = ({ title, tasks, dispatch }) => {
+const Card = ({ title, index, tasks, dispatch }) => {
 
   const ref_task = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (ref_task.current.value === '') return;
     const newTask = {index: nanoid(5), name: ref_task.current.value};
     dispatch({type: 'ADD', payload: {column: title, task: newTask}});
     ref_task.current.value = '';
   }
 
   return (
-    <CardStyled>
-      <CardHeader>{title}</CardHeader>
-      <Droppable droppableId={title}>
-        {(provided) => (
-          <CardBody ref={provided.innerRef} {...provided.droppableProps}>
-            {tasks.map((ele, i) => (
-              <Item key={ele.index} index={i} task={ele} />
-            ))}
-            {provided.placeholder}
-          </CardBody>
-        )}
-      </Droppable>
-      <InputGroup onSubmit={handleSubmit}>
-        <Button>
-          <i className='fa fa-plus'></i>
-        </Button>
-        <Input ref={ref_task} type="text" placeholder="Add a task" />
-      </InputGroup>
-    </CardStyled>
+    <Draggable draggableId={title} index={index}> 
+      {provided =>
+      <CardStyled
+        ref={provided.innerRef} 
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+      >
+        <CardHeader>{title}</CardHeader>
+        <Droppable droppableId={title} type="card">
+          {(provided) => (
+            <CardBody ref={provided.innerRef} {...provided.droppableProps}>
+              {tasks.map((ele, i) => (
+                <Item key={ele.index} index={i} task={ele} />
+              ))}
+              {provided.placeholder}
+            </CardBody>
+          )}
+        </Droppable>
+        <InputGroup onSubmit={handleSubmit}>
+          <Button>
+            <i className='fa fa-plus'></i>
+          </Button>
+          <Input ref={ref_task} type="text" placeholder="Add a task" />
+        </InputGroup>
+      </CardStyled>}
+    </Draggable>
   );
 };
 
@@ -44,10 +52,11 @@ export default Card;
 const Button = styled.button`
   height: 100%;
   padding: 0 .8rem;
-  background-color: #2ec991;
+  background-color: #2abd88;
   color: white;
   border: none;
   outline: none;
+  cursor: pointer;
   transition: all .3s;
   &:hover {
     opacity: 0.8;
