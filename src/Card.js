@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Droppable } from 'react-beautiful-dnd';
 
-import { Item } from './Item';
+import Item from './Item';
 
-export const Card = ({ title, tasks }) => {
+const Card = ({ title, tasks }) => {
   return (
     <CardStyled>
       <CardHeader>{title}</CardHeader>
@@ -22,21 +22,23 @@ export const Card = ({ title, tasks }) => {
   );
 };
 
+export default Card;
+
 const CardStyled = styled.div`
-  background-color: white;
   width: 15rem;
   display: flex;
   flex-direction: column;
   justify-content: start;
-  margin: 0 1rem;
+  margin: 1rem;
   padding: 1rem;
+  background-color: white;
   box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.3);
 `;
 
 const CardHeader = styled.h2`
   padding-bottom: 1rem;
-  border-bottom: 1px solid #cfcfcf;
   text-align: center;
+  border-bottom: 1px solid #cfcfcf;
 `;
 
 const CardBody = styled.ul`
