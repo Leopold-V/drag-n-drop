@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 
-export const Item = ({ task, index }) => {
+export const Item = ({ task, index}) => {
+
+    
+
   return (
     <Draggable draggableId={task.index} index={index}>
       {(provided, snapshot) => (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 import data from './data';
@@ -22,54 +22,76 @@ const changeOfColumn = (state, source, destination) => {
 function App() {
   const [state, setState] = useState(data);
 
-  const handleDrag = (isDragging) => {
-    console.log(isDragging);
-  } 
-
   const onDragEnd = (result) => {
-    const { source, destination } = result;
+    const { draggableId, source, destination } = result;
 
     if (!destination) return;
     if (source.index === destination.index && source.droppableId === destination.droppableId) return;
 
-    if (source.droppableId === destination.droppableId) {
-      setState(changeOfLine(state, source, destination));
+    if (destination.droppableId !== 'trash') {
+      if (source.droppableId === destination.droppableId) {
+        setState(changeOfLine(state, source, destination));
+      } else {
+        setState(changeOfColumn(state, source, destination));
+      }
     } else {
-      setState(changeOfColumn(state, source, destination));
+      const newColumn = state[source.droppableId].filter((ele) => ele.index !== draggableId);
+      setState({...state, [source.droppableId]: newColumn});
     }
   };
 
   return (
-    <Container>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Container>
       <Title>Drag and drop demo</Title>
-      <ContainerCard>
-        <DragDropContext onDragEnd={onDragEnd}>
-          {Object.keys(state).map((ele) => (
-            <div>
-              <Card key={ele} title={ele} tasks={data[ele]} handleDrag={handleDrag} />
-            </div>
-          ))}
-        </DragDropContext>
-      </ContainerCard>
-    </Container>
+        <ContainerCard>
+            {Object.keys(state).map((ele) => (
+              <div key={ele} >
+                <Card title={ele} tasks={state[ele]} />
+              </div>
+            ))}
+        </ContainerCard>
+        <Droppable droppableId="trash">
+              {(provided) => (
+                <WrapperTrash ref={provided.innerRef} {...provided.droppableProps}>
+                  <i className="far fa-trash-alt"></i>
+                  <div>Drop items here to delete</div>
+                  {provided.placeholder}
+                </WrapperTrash>
+              )}
+        </Droppable>
+      </Container>
+    </DragDropContext>
   );
 }
 
 export default App;
 
+const WrapperTrash = styled.div`
+  width: 15rem;
+  height: 8rem;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  color: #ff4b4b;
+  text-align: center;
+  border: 2px dashed #ff4b4b;
+  border-radius: 5px;
+  list-style: none;
+  font-size: 1.1rem;
+`
+
 const Container = styled.div`
-  position: relative;
   background-color: whitesmoke;
   min-height: 100vh;
 `;
 
 const ContainerCard = styled.div`
-  position: absolute;
   width: 100%;
+  min-height: 20rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 6rem;
+  margin-top: 5rem;
 `;
 
 const Title = styled.h1`
