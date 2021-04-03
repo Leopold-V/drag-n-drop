@@ -5,7 +5,8 @@
 ## Feature 
 - Add / Delete a card.
 - Change card order (with drag and drop).
-- Add / delete an item.
+- Add an item.
+- Delete an item (with drag and drop).
 - Reorder item in a card (with drag and drop).
 - Change item from card (with drag and drop).
 
