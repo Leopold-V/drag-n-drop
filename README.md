@@ -1,4 +1,8 @@
-# TODO
+# React simple usage of react-beautiful-dnd + reducer hook.
+
+![demo](https://i.gyazo.com/0b0c8066fb42cc80053e929829c3ba06.png)
+
+### TODO
 
 * [x] Search bar
 * [x] Delete button
@@ -11,3 +15,4 @@
 * [x] usereducer +add/delete board action
 * [x] board name validation (board dont have an id so..)
 * [x] props type and refactor component structure
+
