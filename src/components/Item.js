@@ -1,14 +1,13 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 
-export const Item = ({ task, index}) => {
-
+export const Item = ({ task, index }) => {
   return (
     <Draggable draggableId={task.index} index={index}>
       {(provided, snapshot) => (
-        <Itemstyled 
-          ref={provided.innerRef} 
+        <Itemstyled
+          ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           isDragging={snapshot.isDragging}
@@ -20,16 +19,21 @@ export const Item = ({ task, index}) => {
   );
 };
 
+Item.propTypes = {
+  index: PropTypes.number.isRequired,
+  task: PropTypes.object.isRequired,
+};
+
 export default Item;
 
 const Itemstyled = styled.li`
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
   text-align: center;
-  background-color: ${props => props.isDragging ? '#6389c4' : '#306bc8'};
+  background-color: ${(props) => (props.isDragging ? '#6389c4' : '#306bc8')};
   color: white;
   border-radius: 3px;
-  box-shadow: 0 0 .3rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.3);
   text-overflow: ellipsis;
   overflow: hidden;
 `;
