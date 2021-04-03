@@ -15,8 +15,10 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const input = ref_board.current.value;
-    if (input === '') return;
-    if (state[input] !== undefined) return;
+    if (input === '') 
+      return;
+    if (state[input] !== undefined) 
+      return;
     dispatch({type: 'ADD_BOARD', payload: input});
     ref_board.current.value = '';
   }
@@ -24,18 +26,20 @@ function App() {
   const onDragEnd = (result) => {
     const { draggableId, source, destination } = result;
 
-    if (!destination) return;
-    if (source.index === destination.index && source.droppableId === destination.droppableId) return;
+    if (!destination) 
+      return;
+    if (source.index === destination.index && source.droppableId === destination.droppableId)
+      return;
 
     if (destination.droppableId === 'Trash') {
-      dispatch({type: 'DELETE', payload: {index: draggableId, column: source.droppableId}})
+      dispatch({type: 'DELETE', payload: {index: draggableId, column: source.droppableId}});
     } else if (destination.droppableId === 'Board') {
-      console.log(destination);
+      dispatch({type: 'REORDER_BOARD', payload: {source, destination}})
     } else {
       if (source.droppableId === destination.droppableId) {
-        dispatch({type: 'CHANGE_LINE', payload: {source, destination}})
+        dispatch({type: 'CHANGE_LINE', payload: {source, destination}});
       } else {
-        dispatch({type: 'CHANGE_COLUMN', payload: {source, destination}})
+        dispatch({type: 'CHANGE_COLUMN', payload: {source, destination}});
       }
     }
   };
@@ -48,17 +52,17 @@ function App() {
           {provided => 
           <ContainerCard ref={provided.innerRef} {...provided.droppableProps}>
             {Object.keys(state).map((ele, i) => (
-              <div key={i}><Card title={ele} index={i} tasks={state[ele]} dispatch={dispatch} /></div>
+              <div key={i}><Card key={ele} title={ele} index={i} tasks={state[ele]} dispatch={dispatch} /></div>
             ))}
             {provided.placeholder}
           </ContainerCard>}
         </Droppable>
-          <InputGroup onSubmit={handleSubmit}>
-            <Button>
-              <i className='fa fa-plus'></i>
-            </Button>
-            <Input ref={ref_board} type="text" placeholder="Add a board"/>
-          </InputGroup>
+        <InputGroup onSubmit={handleSubmit}>
+          <Button>
+            <i className='fa fa-plus'></i>
+          </Button>
+          <Input ref={ref_board} type="text" placeholder="Add a board"/>
+        </InputGroup>
         <Droppable droppableId="Trash" type="card">
           {(provided) => (
             <WrapperTrash ref={provided.innerRef} {...provided.droppableProps}>
@@ -71,7 +75,7 @@ function App() {
       </Container>
     </DragDropContext>
   );
-}
+};
 
 export default App;
 

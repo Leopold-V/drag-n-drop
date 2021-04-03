@@ -11,7 +11,8 @@ const Card = ({ title, index, tasks, dispatch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (ref_task.current.value === '') return;
+    if (ref_task.current.value === '') 
+      return;
     const newTask = {index: nanoid(5), name: ref_task.current.value};
     dispatch({type: 'ADD', payload: {column: title, task: newTask}});
     ref_task.current.value = '';

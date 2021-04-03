@@ -13,6 +13,15 @@ export const taskReducer = (state, {type, payload}) => {
         case 'DELETE':
             const newColumn = state[payload.column].filter((ele) => ele.index !== payload.index);
             return {...state, [payload.column]: newColumn}
+        case 'REORDER_BOARD':
+            const newState = {};
+            const newBoard = [...Object.keys(state)];
+            const [remove] = newBoard.splice(payload.source.index, 1);
+            newBoard.splice(payload.destination.index, 0, remove);
+            newBoard.forEach(ele => {
+                newState[ele] = [...state[ele]];
+            });
+            return {...newState};
         case 'ADD_BOARD':
             return {...state, [payload]: []}
         default:
