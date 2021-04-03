@@ -7,4 +7,5 @@
 * [x] usereducer (3 actions)
 * [x] add board
 * [x] draggable board with reorder
-* [ ] delete board
+* [x] delete board
+* [x] board name validation (board dont have an id so..)

@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 
@@ -18,6 +18,11 @@ export const Item = ({ task, index}) => {
       )}
     </Draggable>
   );
+};
+
+Item.propTypes = { 
+  index: PropTypes.number.isRequired,
+  task: PropTypes.object.isRequired,
 };
 
 export default Item;

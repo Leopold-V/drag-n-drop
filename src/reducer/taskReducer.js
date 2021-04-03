@@ -13,7 +13,7 @@ export const taskReducer = (state, {type, payload}) => {
         case 'DELETE':
             const newColumn = state[payload.column].filter((ele) => ele.index !== payload.index);
             return {...state, [payload.column]: newColumn}
-        case 'REORDER_BOARD':
+        case 'REORDER_CARD':
             const newState = {};
             const newBoard = [...Object.keys(state)];
             const [remove] = newBoard.splice(payload.source.index, 1);
@@ -22,8 +22,11 @@ export const taskReducer = (state, {type, payload}) => {
                 newState[ele] = [...state[ele]];
             });
             return {...newState};
-        case 'ADD_BOARD':
-            return {...state, [payload]: []}
+        case 'ADD_CARD':
+            return {...state, [payload]: []};
+        case 'DELETE_CARD':
+            delete state[payload];
+            return {...state};
         default:
             throw new Error();
     }
