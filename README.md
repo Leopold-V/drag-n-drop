@@ -1,6 +1,6 @@
 # React simple usage of react-beautiful-dnd + reducer hook.
 
-![demo](https://i.gyazo.com/0b0c8066fb42cc80053e929829c3ba06.png)
+![demo](https://i.gyazo.com/f21b6f2d246982977f9de999597a65b6.png)
 
 ### TODO
 
